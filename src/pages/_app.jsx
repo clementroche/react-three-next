@@ -3,25 +3,12 @@ import useStore from '@/helpers/store'
 import { useEffect } from 'react'
 import Header from '@/config'
 import Dom from '@/components/layout/dom'
-import partition from '@/helpers/partition'
-
-const LCanvas = dynamic(() => import('@/components/layout/canvas'), {
-  ssr: false,
-})
-
 import '@/styles/index.css'
 import dynamic from 'next/dynamic'
 
-const Balance = ({ child }) => {
-  const [r3f, dom] = partition(child, (c) => c.props.r3f === true)
-
-  return (
-    <>
-      <Dom>{dom}</Dom>
-      <LCanvas>{r3f}</LCanvas>
-    </>
-  )
-}
+const LCanvas = dynamic(() => import('@/components/layout/canvas'), {
+  ssr: true,
+})
 
 function App({ Component, pageProps = { title: 'index' } }) {
   const router = useRouter()
@@ -30,15 +17,13 @@ function App({ Component, pageProps = { title: 'index' } }) {
     useStore.setState({ router })
   }, [router])
 
-  const child = Component(pageProps).props.children
   return (
     <>
       <Header title={pageProps.title} />
-      {child && child.length > 1 ? (
-        <Balance child={Component(pageProps).props.children} />
-      ) : (
+      <Dom>
         <Component {...pageProps} />
-      )}
+      </Dom>
+      {Component?.r3f && <LCanvas>{Component.r3f(pageProps)}</LCanvas>}
     </>
   )
 }

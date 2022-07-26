@@ -5,29 +5,20 @@ const Box = dynamic(() => import('@/components/canvas/Box'), {
   ssr: false,
 })
 
-const DOM = () => {
-  return (
-    // Step 5 - delete Instructions components
-    <Instructions />
-  )
-}
-
-const R3F = () => {
+// Step 5 - delete Instructions components
+const Page = (props) => {
   return (
     <>
-      <Box route='/' />
+      <Instructions />
     </>
   )
 }
 
-const Page = () => {
-  return (
-    <>
-      <DOM />
-      <R3F r3f />
-    </>
-  )
-}
+Page.r3f = (props) => (
+  <>
+    <Box route='/' />
+  </>
+)
 
 export default Page
 

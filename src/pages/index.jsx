@@ -12,30 +12,21 @@ const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
 })
 
 // dom components goes here
-const DOM = () => {
+const Page = (props) => {
   return (
-    // Step 5 - delete Instructions components
-    <Instructions />
+    <>
+      <Instructions />
+    </>
   )
 }
 
 // canvas components goes here
-const R3F = () => {
-  return (
-    <>
-      <Shader />
-    </>
-  )
-}
-
-const Page = () => {
-  return (
-    <>
-      <DOM />
-      <R3F r3f />
-    </>
-  )
-}
+// It will receive same props as Page component (from getStaticProps, etc.)
+Page.r3f = (props) => (
+  <>
+    <Shader />
+  </>
+)
 
 export default Page
 
